@@ -28,10 +28,14 @@ body{
 
 .stage{
   position:relative;
-  width:1180px;
+  width:100%;
+  max-width:1180px;
   margin:0 auto;
   padding:36px 40px 44px;
   overflow:hidden;
+}
+@media(max-width:768px){
+  .stage{ padding:24px 16px 32px; }
 }
 
 .mtn-svg{
@@ -312,6 +316,39 @@ body{
   font-size:34px;
   color:#fff;
 }
+
+.cta-form{
+  position:relative; z-index:2;
+  display:flex; align-items:center; justify-content:center;
+  gap:10px;
+  margin-top:22px;
+  width:100%;
+  background:linear-gradient(90deg, var(--yellow) 0%, var(--yellow-deep) 100%);
+  color:#161200;
+  text-decoration:none;
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  font-weight:700;
+  font-size:17px;
+  padding:16px 20px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(244,210,28,0.3);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.cta-form:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 22px rgba(244,210,28,0.4);
+}
+.cta-form:active{
+  transform:translateY(0);
+}
+@media(max-width:600px){
+  .cta-form{
+    font-size:15px;
+    padding:16px 14px;
+  }
+}
 </style></head>
 <body>
 <div class="stage"><svg class="mtn-svg" viewBox="0 0 1180 210" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -342,6 +379,7 @@ body{
   <div class="tag">Tappa</div>
   <div class="tnum">2</div>
 </a></div>
+<a class="cta-form" href="https://forms.gle/Ww4PqcVrxsABcMun7" target="_blank" rel="noopener">📝 Compila il modulo</a>
 <div class="footer-note">Fantatour 2026™ &middot; aggiornato ad ogni tappa</div>
 </div>
 </body></html>
