@@ -1,0 +1,2715 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8">
+<title>Fantatour 2026™️ &middot; Tappa 9</title>
+<style>/* ===== Fantasy League broadcast-style card system ===== */
+:root{
+  --navy-deep:#0b1e33;
+  --navy-mid:#122c4a;
+  --navy-light:#1c3f63;
+  --yellow:#f4d21c;
+  --yellow-deep:#e0b400;
+  --ink:#eef3f8;
+  --ink-dim:#9fb2c6;
+  --line: rgba(255,255,255,0.10);
+  --panel: rgba(255,255,255,0.045);
+  --panel-strong: rgba(255,255,255,0.08);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"DejaVu Sans","Helvetica Neue",Arial,sans-serif;
+  background:
+    radial-gradient(1200px 500px at 15% -10%, rgba(255,255,255,0.06), transparent 60%),
+    linear-gradient(180deg,#0a1a2c 0%, #0d2338 35%, #123452 70%, #16466b 100%);
+  color:var(--ink);
+}
+
+.condensed{ font-family:"DejaVu Sans Condensed","Arial Narrow",sans-serif; }
+
+.stage{
+  position:relative;
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+  padding:36px 40px 44px;
+  overflow:hidden;
+}
+@media(max-width:768px){
+  .stage{ padding:24px 16px 32px; }
+}
+
+.mtn-svg{
+  position:absolute; left:0; bottom:0; width:100%; height:210px; z-index:0; opacity:0.35;
+}
+
+.header{
+  position:relative; z-index:2;
+  display:flex; align-items:center; gap:22px;
+  margin-bottom:26px;
+}
+
+.badge{
+  width:76px; height:76px; border-radius:50%;
+  background:var(--navy-deep);
+  border:4px solid var(--yellow);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 0 0 4px rgba(244,210,28,0.12);
+}
+.badge svg{width:42px;height:42px;}
+
+.header-text .eyebrow{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.14em;
+  font-size:13px;
+  color:var(--yellow);
+  font-weight:700;
+  margin:0 0 4px;
+}
+.header-text h1{
+  margin:0;
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  font-weight:700;
+  font-size:30px;
+  letter-spacing:0.01em;
+  color:#fff;
+  text-transform:uppercase;
+}
+.header-text .sub{
+  margin:4px 0 0;
+  font-size:15px;
+  color:var(--ink-dim);
+}
+
+.sponsor{
+  margin-left:auto;
+  background:#fff;
+  color:#0b1e33;
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  font-weight:700;
+  letter-spacing:0.03em;
+  font-size:20px;
+  padding:10px 20px;
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.25);
+}
+.sponsor .dot{width:10px;height:10px;border-radius:50%;background:var(--yellow-deep);}
+
+/* ===== Ranking table ===== */
+.board{ position:relative; z-index:2; }
+
+.row{
+  display:grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items:center;
+  column-gap:16px;
+  padding:9px 18px;
+  border-radius:8px;
+  margin-bottom:3px;
+}
+.row.alt{ background:var(--panel); }
+.row.leader{
+  background:linear-gradient(90deg, var(--yellow) 0%, var(--yellow-deep) 100%);
+  color:#161200;
+  box-shadow:0 4px 14px rgba(244,210,28,0.25);
+  margin-bottom:6px;
+}
+.row.leader .pos{color:#161200;}
+.row.leader .team{color:#161200;}
+.row.leader .ds{color:#463b00;}
+.row.leader .pts{color:#161200;}
+
+.pos{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  font-weight:700;
+  font-size:19px;
+  color:#fff;
+  text-align:center;
+}
+.team-block{ display:flex; flex-direction:column; min-width:0; }
+.team{
+  font-weight:700;
+  font-size:16.5px;
+  color:#fff;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.ds{
+  font-size:12.5px;
+  color:var(--ink-dim);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.pts-block{ display:flex; align-items:baseline; gap:10px; justify-content:flex-end; }
+.pts{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  font-weight:700;
+  font-size:20px;
+  color:#fff;
+  min-width:52px;
+  text-align:right;
+}
+.pts-totale{
+  background:var(--yellow) !important;
+  color:#161200 !important;
+  border-radius:6px;
+  padding:2px 10px;
+  min-width:52px;
+}
+.pts-piazz{
+  background:#2fbf6a !important;
+  color:#052914 !important;
+  border-radius:6px;
+  padding:2px 10px;
+  min-width:52px;
+}
+.pts-label{
+  font-size:10.5px;
+  color:var(--ink-dim);
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+}
+.split-cols{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px 40px;
+}
+
+/* rider mini rows (card 3 & 4) */
+.mini-row{
+  display:grid;
+  grid-template-columns:26px 1fr auto;
+  padding:5px 10px;
+  font-size:13.5px;
+  border-radius:5px;
+}
+.mini-row.alt{ background:var(--panel); }
+.mini-row .mpos{ color:var(--ink-dim); font-weight:700; font-family:"DejaVu Sans Condensed",sans-serif; }
+.mini-row .mname{ color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.mini-row .mpts{ color:var(--yellow); font-weight:700; text-align:right; }
+
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 16px 10px;
+}
+.panel h3{
+  margin:0 0 10px;
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  font-size:14px;
+  color:var(--yellow);
+  border-bottom:1px solid var(--line);
+  padding-bottom:8px;
+}
+
+.section-title{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  font-size:15px;
+  color:var(--yellow);
+  margin:26px 0 12px;
+  padding-bottom:6px;
+  border-bottom:1px solid var(--line);
+}
+
+.footer-note{
+  margin-top:22px;
+  font-size:11.5px;
+  color:var(--ink-dim);
+  text-align:right;
+  position:relative; z-index:2;
+}
+
+/* ===== Card 4: team grid ===== */
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+  position:relative; z-index:2;
+}
+.team-card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+.team-card.leader-card{
+  border-color:var(--yellow-deep);
+  box-shadow:0 0 0 1px rgba(244,210,28,0.35);
+}
+.team-card-head{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 14px;
+  background:var(--panel-strong);
+}
+.team-card.leader-card .team-card-head{
+  background:linear-gradient(90deg,var(--yellow),var(--yellow-deep));
+}
+.team-card-head .tname{
+  font-weight:700; font-size:14.5px; color:#fff;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.team-card.leader-card .tname{ color:#161200; }
+.team-card-head .tpts{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  font-weight:700; font-size:17px; color:var(--yellow); flex-shrink:0; margin-left:8px;
+}
+.team-card.leader-card .tpts{ color:#161200; }
+.team-card-ds{
+  font-size:11px; color:var(--ink-dim); padding:6px 14px 0;
+}
+.team-card.leader-card .team-card-ds{ color:rgba(22,18,0,0.65); background:linear-gradient(90deg,var(--yellow),var(--yellow-deep)); padding-top:4px; padding-bottom:2px;}
+.rider-list{ padding:8px 10px 10px; }
+.rider-row{
+  display:flex; justify-content:space-between; gap:8px;
+  font-size:12.5px; padding:2.5px 6px; border-radius:4px;
+}
+.rider-row:nth-child(even){ background:rgba(255,255,255,0.035); }
+.rider-row .rname{ color:#dbe6f0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rider-row .rpts{ color:var(--yellow); font-weight:700; flex-shrink:0; }
+.rider-row.zero .rpts{ color:var(--ink-dim); font-weight:400; }
+
+
+/* ===== Tabs ===== */
+.tabnav{
+  position:relative; z-index:2;
+  display:flex; flex-wrap:wrap; gap:8px;
+  margin-bottom:22px;
+}
+.tab-btn{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  font-weight:700;
+  font-size:14px;
+  padding:10px 16px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--ink-dim);
+  cursor:pointer;
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
+}
+.tab-btn.active{
+  background:linear-gradient(90deg, var(--yellow) 0%, var(--yellow-deep) 100%);
+  color:#161200;
+  border-color:var(--yellow-deep);
+}
+.tab-panel{ display:none; position:relative; z-index:2; }
+.tab-panel.active{ display:block; }
+
+.card-title{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  font-size:19px;
+  color:#fff;
+  margin:0 0 16px;
+}
+
+/* ===== Tab1: Ciclisti di Giornata - mobile-first grid areas ===== */
+.ciclisti-grid{
+  display:grid;
+  grid-template-areas:
+    "top10"
+    "gpm"
+    "mgs";
+  gap:18px;
+}
+.area-top10{ grid-area:top10; }
+.area-gpm{ grid-area:gpm; }
+.area-mgs{ grid-area:mgs; display:flex; flex-direction:column; gap:18px; }
+
+.gpm-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+
+@media(min-width:769px){
+  .ciclisti-grid{
+    grid-template-columns:1fr 1fr;
+    grid-template-areas:
+      "top10 mgs"
+      "gpm   gpm";
+  }
+  .gpm-grid{ grid-template-columns:1fr 1fr; }
+}
+@media(min-width:1025px){
+  .gpm-grid{ grid-template-columns:repeat(4,1fr); }
+}
+
+/* ===== Tab2: Squadra per Squadra ===== */
+@media(max-width:1024px){
+  .team-grid{ grid-template-columns:1fr; }
+  .team-card-head .tname{ font-size:16px; }
+  .team-card-head .tpts{ font-size:19px; }
+  .team-card-ds{ font-size:12.5px; }
+  .rider-row{ font-size:14px; padding:4px 6px; }
+}
+
+/* ===== Tab3: Riepilogo Giornata ===== */
+.riepilogo-row{ grid-template-columns: 46px 1fr auto; }
+.riepilogo-pts, .classifica-pts{
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; justify-content:flex-end;
+}
+.pts-item{ display:flex; flex-direction:column; align-items:flex-end; }
+@media(max-width:768px){
+  .riepilogo-pts, .classifica-pts{ gap:8px; }
+  .riepilogo-row, .classifica-row{ padding:9px 10px; column-gap:8px; }
+}
+
+/* ===== Tab4/5: Classifica con select tappa ===== */
+.tappa-select-wrap{
+  position:relative; z-index:2;
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:18px;
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  color:var(--ink-dim);
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+}
+.tappa-select{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  font-weight:700;
+  font-size:15px;
+  color:#fff;
+  background:var(--navy-mid);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:8px 12px;
+}
+.classifica-row .cls-tappa{ display:none; }
+.classifica-row .cls-tappa.pts-visible{ display:flex; }
+
+/* GPM mini panel adjustment */
+.gpm-box h3{ font-size:12.5px; }
+
+</style></head>
+<body>
+<div class="stage"><svg class="mtn-svg" viewBox="0 0 1180 210" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<polygon points="0,210 0,140 120,60 230,130 340,40 480,150 600,90 760,170 860,110 980,160 1090,80 1180,150 1180,210" fill="#0a1622"/>
+<polygon points="0,210 0,170 150,120 300,175 460,110 620,180 800,140 950,190 1180,150 1180,210" fill="#0d1c2c"/>
+</svg>
+<div class="header">
+  <div class="badge"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<circle cx="24" cy="24" r="19" fill="none" stroke="#f4d21c" stroke-width="3"/>
+<circle cx="24" cy="24" r="4" fill="#f4d21c"/>
+<g stroke="#f4d21c" stroke-width="2">
+<line x1="24" y1="24" x2="24" y2="6"/><line x1="24" y1="24" x2="24" y2="42"/>
+<line x1="24" y1="24" x2="6" y2="24"/><line x1="24" y1="24" x2="42" y2="24"/>
+<line x1="24" y1="24" x2="11" y2="11"/><line x1="24" y1="24" x2="37" y2="37"/>
+<line x1="24" y1="24" x2="11" y2="37"/><line x1="24" y1="24" x2="37" y2="11"/>
+</g>
+</svg></div>
+  <div class="header-text">
+    <p class="eyebrow">Fantatour 2026™️ &middot; Tappa 9</p>
+    <h1>Risultati Tappa 9</h1>
+    <p class="sub">Classifiche, squadre e protagonisti di giornata</p>
+  </div>
+  <div class="sponsor"><span class="dot"></span>Fantatour 2026™️</div>
+</div>
+
+<div class="tabnav">
+<button class="tab-btn active" data-tab="tab1">Ciclisti di Giornata</button>
+<button class="tab-btn" data-tab="tab2">Squadra per Squadra</button>
+<button class="tab-btn" data-tab="tab3">Riepilogo Giornata</button>
+<button class="tab-btn" data-tab="tab4">Classifica Generale</button>
+<button class="tab-btn" data-tab="tab5">Classifica a Punti</button>
+</div>
+
+<div class="tab-panel active" id="tab1">
+<h2 class="card-title">Ciclisti di Giornata</h2>
+<div class="card-inner">
+<div class="ciclisti-grid">
+<div class="panel area-top10">
+<h3>Top 10 Tappa</h3>
+<div class="row leader">
+<div class="pos">1</div>
+<div class="team-block"><div class="team">van der Poel Mathieu</div></div>
+<div class="pts-block"><div class="pts">30</div></div>
+</div>
+<div class="row alt">
+<div class="pos">2</div>
+<div class="team-block"><div class="team">Johannessen Tobias Halland</div></div>
+<div class="pts-block"><div class="pts">20</div></div>
+</div>
+<div class="row">
+<div class="pos">3</div>
+<div class="team-block"><div class="team">Pidcock Tom</div></div>
+<div class="pts-block"><div class="pts">10</div></div>
+</div>
+<div class="row alt">
+<div class="pos">4</div>
+<div class="team-block"><div class="team">Baudin Alex</div></div>
+<div class="pts-block"><div class="pts">7</div></div>
+</div>
+<div class="row">
+<div class="pos">5</div>
+<div class="team-block"><div class="team">Ganna Filippo</div></div>
+<div class="pts-block"><div class="pts">6</div></div>
+</div>
+<div class="row alt">
+<div class="pos">6</div>
+<div class="team-block"><div class="team">Pedersen Mads</div></div>
+<div class="pts-block"><div class="pts">5</div></div>
+</div>
+<div class="row">
+<div class="pos">7</div>
+<div class="team-block"><div class="team">Matthews Michael</div></div>
+<div class="pts-block"><div class="pts">4</div></div>
+</div>
+<div class="row alt">
+<div class="pos">8</div>
+<div class="team-block"><div class="team">Jegat Jordan</div></div>
+<div class="pts-block"><div class="pts">3</div></div>
+</div>
+<div class="row">
+<div class="pos">9</div>
+<div class="team-block"><div class="team">Breuillard Nicolas</div></div>
+<div class="pts-block"><div class="pts">2</div></div>
+</div>
+<div class="row alt">
+<div class="pos">10</div>
+<div class="team-block"><div class="team">Quinn Sean</div></div>
+<div class="pts-block"><div class="pts">1</div></div>
+</div>
+</div>
+<div class="area-mgs">
+<div class="panel">
+<h3>Maglia Gialla</h3>
+<div class="row leader">
+<div class="pos">🌻</div>
+<div class="team-block"><div class="team">Pogačar Tadej</div></div>
+<div class="pts-block"><div class="pts">5</div></div>
+</div>
+</div>
+<div class="panel">
+<h3>Sprint</h3>
+<div class="row leader">
+<div class="pos">1</div>
+<div class="team-block"><div class="team">PEDERSEN Mads</div></div>
+<div class="pts-block"><div class="pts">8</div></div>
+</div>
+<div class="row alt">
+<div class="pos">2</div>
+<div class="team-block"><div class="team">GIRMAY Biniam</div></div>
+<div class="pts-block"><div class="pts">4</div></div>
+</div>
+<div class="row">
+<div class="pos">3</div>
+<div class="team-block"><div class="team">PHILIPSEN Jasper</div></div>
+<div class="pts-block"><div class="pts">2</div></div>
+</div>
+</div>
+</div>
+<div class="area-gpm">
+<div class="gpm-grid">
+<div class="panel gpm-box">
+<h3>GPM &middot; Cat. 3</h3>
+<div class="mini-row">
+<div class="mpos">1</div>
+<div class="mname">PARET-PEINTRE Valentin</div>
+<div class="mpts">5</div>
+</div><div class="mini-row alt">
+<div class="mpos">2</div>
+<div class="mname">JORGENSON Matteo</div>
+<div class="mpts">3</div>
+</div><div class="mini-row">
+<div class="mpos">3</div>
+<div class="mname">—</div>
+<div class="mpts">0</div>
+</div>
+</div>
+<div class="panel gpm-box">
+<h3>GPM &middot; Cat. 2</h3>
+<div class="mini-row">
+<div class="mpos">1</div>
+<div class="mname">PIDCOCK Tom</div>
+<div class="mpts">7</div>
+</div><div class="mini-row alt">
+<div class="mpos">2</div>
+<div class="mname">SIMMONS Quinn</div>
+<div class="mpts">5</div>
+</div><div class="mini-row">
+<div class="mpos">3</div>
+<div class="mname">JOHANNESSEN Tobias Halland</div>
+<div class="mpts">2</div>
+</div>
+</div>
+<div class="panel gpm-box">
+<h3>GPM &middot; Cat. 3</h3>
+<div class="mini-row">
+<div class="mpos">1</div>
+<div class="mname">PIDCOCK Tom</div>
+<div class="mpts">5</div>
+</div><div class="mini-row alt">
+<div class="mpos">2</div>
+<div class="mname">VAN EETVELT Lennert</div>
+<div class="mpts">3</div>
+</div><div class="mini-row">
+<div class="mpos">3</div>
+<div class="mname">—</div>
+<div class="mpts">0</div>
+</div>
+</div>
+<div class="panel gpm-box">
+<h3>GPM &middot; Cat. 4</h3>
+<div class="mini-row">
+<div class="mpos">1</div>
+<div class="mname">VAN DER POEL Mathieu</div>
+<div class="mpts">3</div>
+</div><div class="mini-row alt">
+<div class="mpos">2</div>
+<div class="mname">—</div>
+<div class="mpts">0</div>
+</div><div class="mini-row">
+<div class="mpos">3</div>
+<div class="mname">—</div>
+<div class="mpts">0</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="tab-panel" id="tab2">
+<h2 class="card-title">Squadra per Squadra</h2>
+<div class="team-grid">
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Les experts</div>
+<div class="tpts">30</div>
+</div>
+<div class="team-card-ds">DS: Bruno Di Benedetto</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row zero">
+<div class="rname">PLAPP Luke</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VAUQUELIN Kévin</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JORGENSON Matteo</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">FOSS Tobias</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BRAZ AFONSO Clément</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">PARET-PEINTRE Aurélien</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Lodolandia Epo Cycling</div>
+<div class="tpts">32</div>
+</div>
+<div class="team-card-ds">DS: Jacopo Lodolo</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JOHANNESSEN Tobias Halland</div>
+<div class="rpts">22</div>
+</div><div class="rider-row zero">
+<div class="rname">WÆRENSKJOLD Søren</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PARET-PEINTRE Valentin</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">STEINHAUSER Georg</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BAUHAUS Phil</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">PARET-PEINTRE Aurélien</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Pippottin Soudal</div>
+<div class="tpts">65</div>
+</div>
+<div class="team-card-ds">DS: Davide Cipollini</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row zero">
+<div class="rname">WÆRENSKJOLD Søren</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">SKJELMOSE Mattias</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">SIMMONS Quinn</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">VACEK Mathias</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">WELLENS Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">SKUJIŅŠ Toms</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Monmatron</div>
+<div class="tpts">66</div>
+</div>
+<div class="team-card-ds">DS: Tommaso Gioli</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">SCHMID Mauro</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row">
+<div class="rname">GANNA Filippo</div>
+<div class="rpts">6</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HINDLEY Jai</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CRAPS Lars</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BENNETT George</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">YATES Adam</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">La gamba oltre la siepe</div>
+<div class="tpts">60</div>
+</div>
+<div class="team-card-ds">DS: Luca Jadi</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row zero">
+<div class="rname">ABRAHAMSEN Jonas</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HINDLEY Jai</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CARUSO Damiano</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CASTRILLO Pablo</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CAMPENAERTS Victor</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Pedale Cusaghese</div>
+<div class="tpts">11</div>
+</div>
+<div class="team-card-ds">DS: Marco Colucci</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">PHILIPSEN Jasper</div>
+<div class="rpts">2</div>
+</div><div class="rider-row zero">
+<div class="rname">SEIXAS Paul</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">AYUSO Juan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">MATTHEWS Michael</div>
+<div class="rpts">4</div>
+</div><div class="rider-row zero">
+<div class="rname">BERNAL Egan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PARET-PEINTRE Valentin</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">WELLENS Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">ASGREEN Kasper</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CORT Magnus</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">CMFS - Confusion Mentale Fin de Siècle</div>
+<div class="tpts">8</div>
+</div>
+<div class="team-card-ds">DS: Davide Grazielli</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CARAPAZ Richard</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">PLAPP Luke</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">ARENSMAN Thymen</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JORGENSON Matteo</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">GEE-WEST Derek</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">YATES Adam</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VALGREN Michael</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Scrocco Touring Club</div>
+<div class="tpts">11</div>
+</div>
+<div class="team-card-ds">DS: Matteo Collotti</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">AYUSO Juan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BITTNER Pavel</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BERNAL Egan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JORGENSON Matteo</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">GEE-WEST Derek</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">VAN EETVELT Lennert</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">STEINHAUSER Georg</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Team BDSM</div>
+<div class="tpts">41</div>
+</div>
+<div class="team-card-ds">DS: Daniele Ruosi</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">MARTINEZ Lenny</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">ABRAHAMSEN Jonas</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VAUQUELIN Kévin</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JORGENSON Matteo</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">GEE-WEST Derek</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">KUSS Sepp</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CORT Magnus</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">MetadoneUno</div>
+<div class="tpts">6</div>
+</div>
+<div class="team-card-ds">DS: Thomas Criscuolo</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">PHILIPSEN Jasper</div>
+<div class="rpts">2</div>
+</div><div class="rider-row zero">
+<div class="rname">SEIXAS Paul</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">AYUSO Juan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">MATTHEWS Michael</div>
+<div class="rpts">4</div>
+</div><div class="rider-row zero">
+<div class="rname">ARENSMAN Thymen</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">O&#x27;CONNOR Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">WELLENS Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">MCNULTY Brandon</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CORT Magnus</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">LaVisconteCobram</div>
+<div class="tpts">9</div>
+</div>
+<div class="team-card-ds">DS: Marco Moscatiello</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CARAPAZ Richard</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">MATTHEWS Michael</div>
+<div class="rpts">4</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">TURGIS Anthony</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VAN BAARLE Dylan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BALLERINI Davide</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CORT Magnus</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Astio Mangiabaguette</div>
+<div class="tpts">63</div>
+</div>
+<div class="team-card-ds">DS: Adriano Astolfi</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row zero">
+<div class="rname">WÆRENSKJOLD Søren</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VAUQUELIN Kévin</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JORGENSON Matteo</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">VACEK Mathias</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CORT Magnus</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BAUHAUS Phil</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">GxG</div>
+<div class="tpts">18</div>
+</div>
+<div class="team-card-ds">DS: Giacomo Gambatesa</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">PEDERSEN Mads</div>
+<div class="rpts">13</div>
+</div><div class="rider-row zero">
+<div class="rname">LIPOWITZ Florian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GODON Dorian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">MARTINEZ Lenny</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">ARANBURU Alex</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">UIJTDEBROEKS Cian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PARET-PEINTRE Valentin</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">BENOOT Tiesj</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BAUHAUS Phil</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BALDERSTONE Abel</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Casolari Piluch</div>
+<div class="tpts">60</div>
+</div>
+<div class="team-card-ds">DS: Emiliano Mariotti e Riccardo Spinelli</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">GODON Dorian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row zero">
+<div class="rname">ARANBURU Alex</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">STUYVEN Jasper</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">PIGANZOLI Davide</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">MARTIN Guillaume</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BARGUIL Warren</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Nipples - Vini Fattoni - Bellazè</div>
+<div class="tpts">5</div>
+</div>
+<div class="team-card-ds">DS: Jacopo Nedbal</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">IZAGIRRE Ion</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">AYUSO Juan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">KANTER Max</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VAUQUELIN Kévin</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BERCKMOES Jenno</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BAUHAUS Phil</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VERSTRYNGE Emiel</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GARCÍA PIERNA Raúl</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">T-Mobbasta</div>
+<div class="tpts">5</div>
+</div>
+<div class="team-card-ds">DS: Ale Mayr</div>
+<div class="rider-list">
+<div class="rider-row zero">
+<div class="rname">VINGEGAARD Jonas</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CARAPAZ Richard</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">ABRAHAMSEN Jonas</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">SIMMONS Quinn</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">BALLERINI Davide</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">ASGREEN Kasper</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BARGUIL Warren</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Squadra Genew</div>
+<div class="tpts">10</div>
+</div>
+<div class="team-card-ds">DS: Jacopo Volonté</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GODON Dorian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">MARTINEZ Lenny</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">KANTER Max</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BERNAL Egan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">SIMMONS Quinn</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">CORT Magnus</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">RUBIO Einer</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CHARMIG Anthon</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Gelateria Chocoloco - Vignola (MO)</div>
+<div class="tpts">14</div>
+</div>
+<div class="team-card-ds">DS: Guido Romeo</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">GIRMAY Biniam</div>
+<div class="rpts">4</div>
+</div><div class="rider-row zero">
+<div class="rname">GODON Dorian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CARAPAZ Richard</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">PLAPP Luke</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">UIJTDEBROEKS Cian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PARET-PEINTRE Valentin</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">DEBRUYNE Ramses</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CHARMIG Anthon</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BRAZ AFONSO Clément</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">LIDL TTRIMONI</div>
+<div class="tpts">36</div>
+</div>
+<div class="team-card-ds">DS: Giacomo Sacchetti</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">GIRMAY Biniam</div>
+<div class="rpts">4</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row zero">
+<div class="rname">WÆRENSKJOLD Søren</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">FRIGO Marco</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">SIMMONS Quinn</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">BALLERINI Davide</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BAUHAUS Phil</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VACEK Mathias</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Epo e solfiti</div>
+<div class="tpts">42</div>
+</div>
+<div class="team-card-ds">DS: Gabriele Lanza</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">GODON Dorian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">AYUSO Juan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">MATTHEWS Michael</div>
+<div class="rpts">4</div>
+</div><div class="rider-row zero">
+<div class="rname">VAUQUELIN Kévin</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">RICCITELLO Matthew</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">PIGANZOLI Davide</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">PARET-PEINTRE Aurélien</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BAUHAUS Phil</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card leader-card">
+<div class="team-card-head">
+<div class="tname">Molla Buni!</div>
+<div class="tpts">67</div>
+</div>
+<div class="team-card-ds">DS: Davide Ambrosini</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JOHANNESSEN Tobias Halland</div>
+<div class="rpts">22</div>
+</div><div class="rider-row">
+<div class="rname">MATTHEWS Michael</div>
+<div class="rpts">4</div>
+</div><div class="rider-row zero">
+<div class="rname">UIJTDEBROEKS Cian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JORGENSON Matteo</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">HERMANS Quinten</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BERTHET Clément</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GEE-WEST Derek</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Per chi tira la Polonia?!?</div>
+<div class="tpts">37</div>
+</div>
+<div class="team-card-ds">DS: Guido Pastore</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">KOOIJ Olav</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row zero">
+<div class="rname">KANTER Max</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">BAUDIN Alex</div>
+<div class="rpts">7</div>
+</div><div class="rider-row zero">
+<div class="rname">VACEK Mathias</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">VAN EETVELT Lennert</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">HIGUITA Sergio</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">LaRosaGialla</div>
+<div class="tpts">14</div>
+</div>
+<div class="team-card-ds">DS: Fabio Passi</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CARUSO Damiano</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">AYUSO Juan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">GANNA Filippo</div>
+<div class="rpts">6</div>
+</div><div class="rider-row zero">
+<div class="rname">SKJELMOSE Mattias</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JORGENSON Matteo</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">CASTRILLO Pablo</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BAUHAUS Phil</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">BENOOT Tiesj</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Alla Bersagliera</div>
+<div class="tpts">36</div>
+</div>
+<div class="team-card-ds">DS: PierNunzio Pennisi</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">KOOIJ Olav</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">DE LIE Arnaud</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row">
+<div class="rname">GANNA Filippo</div>
+<div class="rpts">6</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JORGENSON Matteo</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">MCNULTY Brandon</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">SKUJIŅŠ Toms</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">YATES Adam</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Sborahansgroe</div>
+<div class="tpts">40</div>
+</div>
+<div class="team-card-ds">DS: Nicolò Mura</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">GIRMAY Biniam</div>
+<div class="rpts">4</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row">
+<div class="rname">GANNA Filippo</div>
+<div class="rpts">6</div>
+</div><div class="rider-row zero">
+<div class="rname">ARENSMAN Thymen</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">STUYVEN Jasper</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VACEK Mathias</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">VAN EETVELT Lennert</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">BAUHAUS Phil</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Gnaron1995</div>
+<div class="tpts">38</div>
+</div>
+<div class="team-card-ds">DS: Aaron Medico</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">PEDERSEN Mads</div>
+<div class="rpts">13</div>
+</div><div class="rider-row zero">
+<div class="rname">DEL TORO Isaac</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GODON Dorian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JOHANNESSEN Tobias Halland</div>
+<div class="rpts">22</div>
+</div><div class="rider-row zero">
+<div class="rname">ARANBURU Alex</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">UIJTDEBROEKS Cian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JEGAT Jordan</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">CORT Magnus</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">FRIGO Marco</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CASTRILLO Pablo</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">B-IGA</div>
+<div class="tpts">14</div>
+</div>
+<div class="team-card-ds">DS: Alessandro Bonissone</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GODON Dorian</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">MARTINEZ Lenny</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">MATTHEWS Michael</div>
+<div class="rpts">4</div>
+</div><div class="rider-row zero">
+<div class="rname">BERNAL Egan</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PARET-PEINTRE Valentin</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">HIGUITA Sergio</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HIRSCHI Marc</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">PACHER Quentin</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">A.s.d. Planate</div>
+<div class="tpts">10</div>
+</div>
+<div class="team-card-ds">DS: Samuele Almagioni</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CARAPAZ Richard</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">ABRAHAMSEN Jonas</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PARET-PEINTRE Valentin</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">BRAZ AFONSO Clément</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CORT Magnus</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GARCÍA PIERNA Raúl</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Arkea Zzodicane</div>
+<div class="tpts">47</div>
+</div>
+<div class="team-card-ds">DS: Michele Ambrosini</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">MARTINEZ Lenny</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">GANNA Filippo</div>
+<div class="rpts">6</div>
+</div><div class="rider-row zero">
+<div class="rname">ARENSMAN Thymen</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JORGENSON Matteo</div>
+<div class="rpts">3</div>
+</div><div class="rider-row zero">
+<div class="rname">VACEK Mathias</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">MCNULTY Brandon</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">TARLING Joshua</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Cavioni Cereali Sementi e Mangimi</div>
+<div class="tpts">38</div>
+</div>
+<div class="team-card-ds">DS: Ulisse Bastianelli</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MERLIER Tim</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">JOHANNESSEN Tobias Halland</div>
+<div class="rpts">22</div>
+</div><div class="rider-row">
+<div class="rname">GANNA Filippo</div>
+<div class="rpts">6</div>
+</div><div class="rider-row zero">
+<div class="rname">HEALY Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PARET-PEINTRE Valentin</div>
+<div class="rpts">5</div>
+</div><div class="rider-row zero">
+<div class="rname">MARTIN Guillaume</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">ARMIRAIL Bruno</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">PARET-PEINTRE Aurélien</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+<div class="team-card">
+<div class="team-card-head">
+<div class="tname">Team Gallo</div>
+<div class="tpts">66</div>
+</div>
+<div class="team-card-ds">DS: Giorgio Verduci</div>
+<div class="rider-list">
+<div class="rider-row">
+<div class="rname">POGAČAR Tadej</div>
+<div class="rpts">5</div>
+</div><div class="rider-row">
+<div class="rname">VAN DER POEL Mathieu</div>
+<div class="rpts">33</div>
+</div><div class="rider-row zero">
+<div class="rname">GRÉGOIRE Romain</div>
+<div class="rpts">0</div>
+</div><div class="rider-row">
+<div class="rname">PIDCOCK Tom</div>
+<div class="rpts">22</div>
+</div><div class="rider-row">
+<div class="rname">GANNA Filippo</div>
+<div class="rpts">6</div>
+</div><div class="rider-row zero">
+<div class="rname">VAUQUELIN Kévin</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">O&#x27;CONNOR Ben</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">CAMPENAERTS Victor</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">VALGREN Michael</div>
+<div class="rpts">0</div>
+</div><div class="rider-row zero">
+<div class="rname">HERMANS Quinten</div>
+<div class="rpts">0</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="tab-panel" id="tab3">
+<h2 class="card-title">Riepilogo Giornata</h2>
+<div class="card-inner">
+<div class="board">
+<div class="row leader riepilogo-row">
+<div class="pos">1</div>
+<div class="team-block"><div class="team">Molla Buni!</div><div class="ds">Davide Ambrosini</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">67</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">10</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">77</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">35</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">2</div>
+<div class="team-block"><div class="team">Monmatron</div><div class="ds">Tommaso Gioli</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">66</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">66</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">20</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">2</div>
+<div class="team-block"><div class="team">Team Gallo</div><div class="ds">Giorgio Verduci</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">66</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">66</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">20</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">4</div>
+<div class="team-block"><div class="team">Pippottin Soudal</div><div class="ds">Davide Cipollini</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">65</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">65</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">8</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">5</div>
+<div class="team-block"><div class="team">Astio Mangiabaguette</div><div class="ds">Adriano Astolfi</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">63</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">63</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">6</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">6</div>
+<div class="team-block"><div class="team">La gamba oltre la siepe</div><div class="ds">Luca Jadi</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">60</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">60</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">5</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">6</div>
+<div class="team-block"><div class="team">Casolari Piluch</div><div class="ds">Emiliano Mariotti e Riccardo Spinelli</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">60</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">60</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">5</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">8</div>
+<div class="team-block"><div class="team">Arkea Zzodicane</div><div class="ds">Michele Ambrosini</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">47</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">47</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">3</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">9</div>
+<div class="team-block"><div class="team">Epo e solfiti</div><div class="ds">Gabriele Lanza</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">42</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">42</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">2</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">10</div>
+<div class="team-block"><div class="team">Team BDSM</div><div class="ds">Daniele Ruosi</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">41</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">41</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">1</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">11</div>
+<div class="team-block"><div class="team">Sborahansgroe</div><div class="ds">Nicolò Mura</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">40</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">40</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">12</div>
+<div class="team-block"><div class="team">Gnaron1995</div><div class="ds">Aaron Medico</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">38</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">38</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">12</div>
+<div class="team-block"><div class="team">Cavioni Cereali Sementi e Mangimi</div><div class="ds">Ulisse Bastianelli</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">38</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">38</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">14</div>
+<div class="team-block"><div class="team">Per chi tira la Polonia?!?</div><div class="ds">Guido Pastore</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">37</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">37</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">15</div>
+<div class="team-block"><div class="team">LIDL TTRIMONI</div><div class="ds">Giacomo Sacchetti</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">36</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">36</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">15</div>
+<div class="team-block"><div class="team">Alla Bersagliera</div><div class="ds">PierNunzio Pennisi</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">36</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">36</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">17</div>
+<div class="team-block"><div class="team">Lodolandia Epo Cycling</div><div class="ds">Jacopo Lodolo</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">32</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">32</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">18</div>
+<div class="team-block"><div class="team">Les experts</div><div class="ds">Bruno Di Benedetto</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">30</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">30</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">19</div>
+<div class="team-block"><div class="team">GxG</div><div class="ds">Giacomo Gambatesa</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">18</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">18</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">20</div>
+<div class="team-block"><div class="team">Gelateria Chocoloco - Vignola (MO)</div><div class="ds">Guido Romeo</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">14</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">14</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">20</div>
+<div class="team-block"><div class="team">LaRosaGialla</div><div class="ds">Fabio Passi</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">14</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">14</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">20</div>
+<div class="team-block"><div class="team">B-IGA</div><div class="ds">Alessandro Bonissone</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">14</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">14</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">23</div>
+<div class="team-block"><div class="team">Pedale Cusaghese</div><div class="ds">Marco Colucci</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">11</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">11</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">23</div>
+<div class="team-block"><div class="team">Scrocco Touring Club</div><div class="ds">Matteo Collotti</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">11</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">11</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">25</div>
+<div class="team-block"><div class="team">Squadra Genew</div><div class="ds">Jacopo Volonté</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">10</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">10</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">25</div>
+<div class="team-block"><div class="team">A.s.d. Planate</div><div class="ds">Samuele Almagioni</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">10</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">10</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">27</div>
+<div class="team-block"><div class="team">LaVisconteCobram</div><div class="ds">Marco Moscatiello</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">9</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">9</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">28</div>
+<div class="team-block"><div class="team">CMFS - Confusion Mentale Fin de Siècle</div><div class="ds">Davide Grazielli</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">8</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">8</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row riepilogo-row">
+<div class="pos">29</div>
+<div class="team-block"><div class="team">MetadoneUno</div><div class="ds">Thomas Criscuolo</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">6</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">6</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">30</div>
+<div class="team-block"><div class="team">Nipples - Vini Fattoni - Bellazè</div><div class="ds">Jacopo Nedbal</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">5</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">5</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+<div class="row alt riepilogo-row">
+<div class="pos">30</div>
+<div class="team-block"><div class="team">T-Mobbasta</div><div class="ds">Ale Mayr</div></div>
+<div class="pts-block riepilogo-pts">
+<div class="pts-item"><div class="pts">5</div><div class="pts-label">Punti</div></div>
+<div class="pts-item"><div class="pts">0</div><div class="pts-label">Bonus</div></div>
+<div class="pts-item"><div class="pts pts-totale">5</div><div class="pts-label">Totale</div></div>
+<div class="pts-item"><div class="pts pts-piazz">0</div><div class="pts-label">Piazz.</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="tab-panel" id="tab4">
+<h2 class="card-title">Classifica Generale</h2>
+<div class="card-inner">
+<div class="tappa-select-wrap">
+<label for="cg-select">Visualizza tappa:</label>
+<select id="cg-select" class="tappa-select" data-table="cg">
+<option value="1">Tappa 1</option><option value="2">Tappa 2</option><option value="3">Tappa 3</option><option value="4">Tappa 4</option><option value="5">Tappa 5</option><option value="6">Tappa 6</option><option value="7">Tappa 7</option><option value="8">Tappa 8</option><option value="9" selected>Tappa 9</option>
+</select>
+</div>
+<div class="board" id="cg-board">
+<div class="row leader classifica-row">
+<div class="pos">1</div>
+<div class="team-block"><div class="team">Per chi tira la Polonia?!?</div><div class="ds">Guido Pastore</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">28</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">97</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">6</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">67</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">68</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">12</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">18</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">37</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">333</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">2</div>
+<div class="team-block"><div class="team">Lodolandia Epo Cycling</div><div class="ds">Jacopo Lodolo</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">37</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">68</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">11</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">68</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">70</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">35</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">32</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">321</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">3</div>
+<div class="team-block"><div class="team">Squadra Genew</div><div class="ds">Jacopo Volonté</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">25</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">57</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">20</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">34</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">90</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">44</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">38</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">10</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">318</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">4</div>
+<div class="team-block"><div class="team">Scrocco Touring Club</div><div class="ds">Matteo Collotti</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">30</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">75</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">3</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">10</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">84</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">35</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">51</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">11</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">299</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">5</div>
+<div class="team-block"><div class="team">Pippottin Soudal</div><div class="ds">Davide Cipollini</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">34</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">60</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">26</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">1</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">80</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">25</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">65</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">296</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">6</div>
+<div class="team-block"><div class="team">Nipples - Vini Fattoni - Bellazè</div><div class="ds">Jacopo Nedbal</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">23</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">59</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">15</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">34</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">74</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">47</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">38</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">5</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">295</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">7</div>
+<div class="team-block"><div class="team">B-IGA</div><div class="ds">Alessandro Bonissone</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">25</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">68</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">10</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">105</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">37</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">35</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">14</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">294</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">8</div>
+<div class="team-block"><div class="team">LaRosaGialla</div><div class="ds">Fabio Passi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">32</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">69</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">8</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">10</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">85</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">40</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">35</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">14</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">293</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">9</div>
+<div class="team-block"><div class="team">Cavioni Cereali Sementi e Mangimi</div><div class="ds">Ulisse Bastianelli</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">37</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">68</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">10</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">68</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">35</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">35</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">38</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">291</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">10</div>
+<div class="team-block"><div class="team">LIDL TTRIMONI</div><div class="ds">Giacomo Sacchetti</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">28</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">50</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">34</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">5</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">64</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">40</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">25</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">36</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">282</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">11</div>
+<div class="team-block"><div class="team">A.s.d. Planate</div><div class="ds">Samuele Almagioni</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">30</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">78</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">10</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">10</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">65</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">35</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">35</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">10</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">273</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">12</div>
+<div class="team-block"><div class="team">Molla Buni!</div><div class="ds">Davide Ambrosini</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">40</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">63</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">7</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">5</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">61</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">5</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">77</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">263</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">13</div>
+<div class="team-block"><div class="team">Les experts</div><div class="ds">Bruno Di Benedetto</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">31</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">50</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">5</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">10</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">64</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">35</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">35</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">30</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">260</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">14</div>
+<div class="team-block"><div class="team">Sborahansgroe</div><div class="ds">Nicolò Mura</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">28</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">66</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">8</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">66</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">20</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">25</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">40</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">257</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">15</div>
+<div class="team-block"><div class="team">Astio Mangiabaguette</div><div class="ds">Adriano Astolfi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">31</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">50</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">11</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">1</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">64</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">30</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">63</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">255</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">16</div>
+<div class="team-block"><div class="team">CMFS - Confusion Mentale Fin de Siècle</div><div class="ds">Davide Grazielli</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">33</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">71</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">10</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">62</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">35</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">35</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">8</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">254</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">17</div>
+<div class="team-block"><div class="team">Gnaron1995</div><div class="ds">Aaron Medico</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">40</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">46</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">64</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">7</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">50</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">7</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">38</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">252</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">18</div>
+<div class="team-block"><div class="team">LaVisconteCobram</div><div class="ds">Marco Moscatiello</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">30</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">70</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">12</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">58</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">35</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">35</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">9</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">249</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">19</div>
+<div class="team-block"><div class="team">Arkea Zzodicane</div><div class="ds">Michele Ambrosini</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">52</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">54</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">6</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">79</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">5</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">47</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">248</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">20</div>
+<div class="team-block"><div class="team">Gelateria Chocoloco - Vignola (MO)</div><div class="ds">Guido Romeo</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">26</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">75</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">16</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">65</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">17</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">25</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">14</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">242</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">21</div>
+<div class="team-block"><div class="team">Alla Bersagliera</div><div class="ds">PierNunzio Pennisi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">37</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">50</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">30</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">69</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">5</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">15</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">36</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">242</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">22</div>
+<div class="team-block"><div class="team">Team Gallo</div><div class="ds">Giorgio Verduci</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">28</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">50</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">5</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">73</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">5</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">66</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">232</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">23</div>
+<div class="team-block"><div class="team">Team BDSM</div><div class="ds">Daniele Ruosi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">32</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">53</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">5</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">90</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">5</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">41</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">231</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">24</div>
+<div class="team-block"><div class="team">La gamba oltre la siepe</div><div class="ds">Luca Jadi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">28</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">50</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">8</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">68</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">5</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">60</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">224</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">25</div>
+<div class="team-block"><div class="team">Monmatron</div><div class="ds">Tommaso Gioli</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">24</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">50</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">68</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">5</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">66</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">218</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">26</div>
+<div class="team-block"><div class="team">Epo e solfiti</div><div class="ds">Gabriele Lanza</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">23</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">58</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">5</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">72</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">12</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">42</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">217</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">27</div>
+<div class="team-block"><div class="team">T-Mobbasta</div><div class="ds">Ale Mayr</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">19</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">58</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">20</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">10</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">44</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">30</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">30</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">5</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">216</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">28</div>
+<div class="team-block"><div class="team">Casolari Piluch</div><div class="ds">Emiliano Mariotti e Riccardo Spinelli</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">24</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">52</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">64</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">7</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">5</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">60</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">212</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">29</div>
+<div class="team-block"><div class="team">GxG</div><div class="ds">Giacomo Gambatesa</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">2</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">38</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">32</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">7</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">53</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">12</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">18</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">162</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">30</div>
+<div class="team-block"><div class="team">Pedale Cusaghese</div><div class="ds">Marco Colucci</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">7</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">40</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">4</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">6</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">56</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">6</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">7</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">11</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">137</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">31</div>
+<div class="team-block"><div class="team">MetadoneUno</div><div class="ds">Thomas Criscuolo</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">17</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">32</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">4</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">6</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">45</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">6</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">7</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">6</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">123</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="tab-panel" id="tab5">
+<h2 class="card-title">Classifica a Punti</h2>
+<div class="card-inner">
+<div class="tappa-select-wrap">
+<label for="cp-select">Visualizza tappa:</label>
+<select id="cp-select" class="tappa-select" data-table="cp">
+<option value="1">Tappa 1</option><option value="2">Tappa 2</option><option value="3">Tappa 3</option><option value="4">Tappa 4</option><option value="5">Tappa 5</option><option value="6">Tappa 6</option><option value="7">Tappa 7</option><option value="8">Tappa 8</option><option value="9" selected>Tappa 9</option>
+</select>
+</div>
+<div class="board" id="cp-board">
+<div class="row leader classifica-row">
+<div class="pos">1</div>
+<div class="team-block"><div class="team">Squadra Genew</div><div class="ds">Jacopo Volonté</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">6</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">20</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">20</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">12</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">20</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">78</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">2</div>
+<div class="team-block"><div class="team">Per chi tira la Polonia?!?</div><div class="ds">Guido Pastore</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">35</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">35</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">70</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">3</div>
+<div class="team-block"><div class="team">Nipples - Vini Fattoni - Bellazè</div><div class="ds">Jacopo Nedbal</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">3</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">20</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">3</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">20</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">20</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">66</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">4</div>
+<div class="team-block"><div class="team">Scrocco Touring Club</div><div class="ds">Matteo Collotti</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">12</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">6</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">4</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">35</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">61</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">5</div>
+<div class="team-block"><div class="team">Lodolandia Epo Cycling</div><div class="ds">Jacopo Lodolo</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">8</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">3</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">5</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">35</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">8</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">59</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">6</div>
+<div class="team-block"><div class="team">Gnaron1995</div><div class="ds">Aaron Medico</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">20</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">35</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">55</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">7</div>
+<div class="team-block"><div class="team">B-IGA</div><div class="ds">Alessandro Bonissone</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">3</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">35</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">5</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">8</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">55</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">8</div>
+<div class="team-block"><div class="team">Molla Buni!</div><div class="ds">Davide Ambrosini</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">20</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">35</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">55</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">9</div>
+<div class="team-block"><div class="team">Arkea Zzodicane</div><div class="ds">Michele Ambrosini</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">35</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">4</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">3</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">42</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">10</div>
+<div class="team-block"><div class="team">A.s.d. Planate</div><div class="ds">Samuele Almagioni</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">20</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">1</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">4</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">8</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">37</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">11</div>
+<div class="team-block"><div class="team">LaRosaGialla</div><div class="ds">Fabio Passi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">2</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">4</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">8</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">8</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">8</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">34</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">12</div>
+<div class="team-block"><div class="team">LIDL TTRIMONI</div><div class="ds">Giacomo Sacchetti</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">20</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">8</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">28</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">13</div>
+<div class="team-block"><div class="team">Cavioni Cereali Sementi e Mangimi</div><div class="ds">Ulisse Bastianelli</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">8</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">3</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">4</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">8</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">27</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">14</div>
+<div class="team-block"><div class="team">CMFS - Confusion Mentale Fin de Siècle</div><div class="ds">Davide Grazielli</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">3</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">6</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">4</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">8</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">25</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">15</div>
+<div class="team-block"><div class="team">Pippottin Soudal</div><div class="ds">Davide Cipollini</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">4</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">8</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">5</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">8</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">25</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">16</div>
+<div class="team-block"><div class="team">LaVisconteCobram</div><div class="ds">Marco Moscatiello</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">5</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">6</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">4</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">8</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">23</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">17</div>
+<div class="team-block"><div class="team">Team BDSM</div><div class="ds">Daniele Ruosi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">2</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">20</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">1</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">23</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">18</div>
+<div class="team-block"><div class="team">Team Gallo</div><div class="ds">Giorgio Verduci</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">2</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">20</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">22</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">19</div>
+<div class="team-block"><div class="team">Monmatron</div><div class="ds">Tommaso Gioli</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">20</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">20</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">20</div>
+<div class="team-block"><div class="team">Gelateria Chocoloco - Vignola (MO)</div><div class="ds">Guido Romeo</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">12</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">4</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">16</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">21</div>
+<div class="team-block"><div class="team">Alla Bersagliera</div><div class="ds">PierNunzio Pennisi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">8</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">8</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">16</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">22</div>
+<div class="team-block"><div class="team">Les experts</div><div class="ds">Bruno Di Benedetto</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">4</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">8</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">16</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">23</div>
+<div class="team-block"><div class="team">GxG</div><div class="ds">Giacomo Gambatesa</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">12</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">12</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">24</div>
+<div class="team-block"><div class="team">T-Mobbasta</div><div class="ds">Ale Mayr</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">6</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">4</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">10</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">25</div>
+<div class="team-block"><div class="team">Astio Mangiabaguette</div><div class="ds">Adriano Astolfi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">2</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">6</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">8</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">26</div>
+<div class="team-block"><div class="team">La gamba oltre la siepe</div><div class="ds">Luca Jadi</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">5</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">5</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">27</div>
+<div class="team-block"><div class="team">Casolari Piluch</div><div class="ds">Emiliano Mariotti e Riccardo Spinelli</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">5</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">5</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">28</div>
+<div class="team-block"><div class="team">Epo e solfiti</div><div class="ds">Gabriele Lanza</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">1</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">2</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">3</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">29</div>
+<div class="team-block"><div class="team">Sborahansgroe</div><div class="ds">Nicolò Mura</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">0</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row alt classifica-row">
+<div class="pos">30</div>
+<div class="team-block"><div class="team">MetadoneUno</div><div class="ds">Thomas Criscuolo</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">0</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+<div class="row classifica-row">
+<div class="pos">31</div>
+<div class="team-block"><div class="team">Pedale Cusaghese</div><div class="ds">Marco Colucci</div></div>
+<div class="pts-block classifica-pts">
+<div class="pts-item cls-tappa" data-tappa="1"><div class="pts">0</div><div class="pts-label">Tappa 1</div></div><div class="pts-item cls-tappa" data-tappa="2"><div class="pts">0</div><div class="pts-label">Tappa 2</div></div><div class="pts-item cls-tappa" data-tappa="3"><div class="pts">0</div><div class="pts-label">Tappa 3</div></div><div class="pts-item cls-tappa" data-tappa="4"><div class="pts">0</div><div class="pts-label">Tappa 4</div></div><div class="pts-item cls-tappa" data-tappa="5"><div class="pts">0</div><div class="pts-label">Tappa 5</div></div><div class="pts-item cls-tappa" data-tappa="6"><div class="pts">0</div><div class="pts-label">Tappa 6</div></div><div class="pts-item cls-tappa" data-tappa="7"><div class="pts">0</div><div class="pts-label">Tappa 7</div></div><div class="pts-item cls-tappa" data-tappa="8"><div class="pts">0</div><div class="pts-label">Tappa 8</div></div><div class="pts-item cls-tappa" data-tappa="9"><div class="pts">0</div><div class="pts-label">Tappa 9</div></div>
+<div class="pts-item"><div class="pts pts-totale">0</div><div class="pts-label">Totale</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="footer-note">Fantatour 2026™️ &middot; Tappa 9</div>
+</div>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabs.forEach(function(b){ b.classList.remove('active'); });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+  function applyTappaSelect(select){
+    var tableId = select.getAttribute('data-table');
+    var value = select.value;
+    var board = document.getElementById(tableId + '-board');
+    if(!board) return;
+    var items = board.querySelectorAll('.cls-tappa');
+    items.forEach(function(it){
+      if(it.getAttribute('data-tappa') === value){
+        it.classList.add('pts-visible');
+      } else {
+        it.classList.remove('pts-visible');
+      }
+    });
+  }
+
+  var selects = document.querySelectorAll('.tappa-select');
+  selects.forEach(function(sel){
+    sel.addEventListener('change', function(){ applyTappaSelect(sel); });
+    applyTappaSelect(sel);
+  });
+})();
+</script>
+</body></html>
