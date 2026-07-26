@@ -1,0 +1,157 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fantatour 2026™ · Classifica Generale</title>
+<style>
+:root{
+  --navy-deep:#0b1e33;
+  --navy-mid:#122c4a;
+  --navy-light:#1c3f63;
+  --yellow:#f4d21c;
+  --yellow-deep:#e0b400;
+  --ink:#eef3f8;
+  --ink-dim:#9fb2c6;
+  --line: rgba(255,255,255,0.10);
+  --panel: rgba(255,255,255,0.045);
+  --panel-strong: rgba(255,255,255,0.08);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"DejaVu Sans","Helvetica Neue",Arial,sans-serif;
+  background:
+    radial-gradient(1200px 500px at 15% -10%, rgba(255,255,255,0.06), transparent 60%),
+    linear-gradient(180deg,#0a1a2c 0%, #0d2338 35%, #123452 70%, #16466b 100%);
+  color:var(--ink);
+}
+.condensed{ font-family:"DejaVu Sans Condensed","Arial Narrow",sans-serif; }
+.stage{ position:relative; width:100%; max-width:1180px; margin:0 auto; padding:36px 40px 44px; overflow:hidden; }
+@media(max-width:768px){ .stage{ padding:20px 14px 28px; } }
+.mtn-svg{ position:absolute; left:0; bottom:0; width:100%; height:210px; z-index:0; opacity:0.35; }
+.header{ position:relative; z-index:2; display:flex; align-items:center; gap:22px; margin-bottom:22px; flex-wrap:wrap; }
+.badge{ width:76px; height:76px; border-radius:50%; background:var(--navy-deep); border:4px solid var(--yellow); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 0 4px rgba(244,210,28,0.12); }
+.badge svg{width:42px;height:42px;}
+.header-text .eyebrow{ font-family:"DejaVu Sans Condensed",sans-serif; text-transform:uppercase; letter-spacing:0.14em; font-size:13px; color:var(--yellow); font-weight:700; margin:0 0 4px; }
+.header-text h1{ margin:0; font-family:"DejaVu Sans Condensed",sans-serif; font-weight:700; font-size:30px; letter-spacing:0.01em; color:#fff; text-transform:uppercase; }
+.header-text .sub{ margin:4px 0 0; font-size:15px; color:var(--ink-dim); }
+.sponsor{ margin-left:auto; background:#fff; color:#0b1e33; font-family:"DejaVu Sans Condensed",sans-serif; font-weight:700; letter-spacing:0.03em; font-size:20px; padding:10px 20px; border-radius:6px; display:flex; align-items:center; gap:8px; box-shadow:0 6px 18px rgba(0,0,0,0.25); }
+.sponsor .dot{width:10px;height:10px;border-radius:50%;background:var(--yellow-deep);}
+
+.board{ position:relative; z-index:2; }
+.row{ display:grid; grid-template-columns: 46px 1fr auto; align-items:center; column-gap:16px; padding:9px 18px; border-radius:8px; margin-bottom:3px; }
+.row.alt{ background:var(--panel); }
+.row.leader{ background:linear-gradient(90deg, var(--yellow) 0%, var(--yellow-deep) 100%); color:#161200; box-shadow:0 4px 14px rgba(0,0,0,0.2); margin-bottom:6px; }
+.row.leader .pos{color:#161200;} .row.leader .team{color:#161200;} .row.leader .ds{color:#161200; opacity:0.75;} .row.leader .pts{color:#161200;}
+.pos{ font-family:"DejaVu Sans Condensed",sans-serif; font-weight:700; font-size:19px; color:#fff; text-align:center; }
+.team-block{ display:flex; flex-direction:column; min-width:0; }
+.team{ font-weight:700; font-size:16.5px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ds{ font-size:12.5px; color:var(--ink-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pts-block{ display:flex; align-items:baseline; gap:10px; justify-content:flex-end; flex-wrap:wrap; }
+.pts{ font-family:"DejaVu Sans Condensed",sans-serif; font-weight:700; font-size:20px; color:#fff; min-width:52px; text-align:right; }
+.pts-totale{ background:var(--yellow) !important; color:#161200 !important; border-radius:6px; padding:2px 10px; min-width:52px; }
+.pts-extra{ background:#7c5cff !important; color:#fff !important; border-radius:6px; padding:2px 10px; min-width:52px; }
+.pts-item{ display:flex; flex-direction:column; align-items:flex-end; }
+.pts-label{ font-size:10.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.06em; }
+.footer-note{ margin-top:22px; font-size:11.5px; color:var(--ink-dim); text-align:right; position:relative; z-index:2; }
+
+.stage-select{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  font-size:15px; font-weight:700;
+  background:var(--panel-strong);
+  color:#fff;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:9px 14px;
+  margin:0 0 16px;
+  width:100%;
+  max-width:280px;
+}
+
+.menu-back{
+  display:inline-block;
+  margin-bottom:18px;
+  color:var(--yellow);
+  text-decoration:none;
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  font-weight:700;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+}
+</style></head>
+<body>
+<div class="stage"><svg class="mtn-svg" viewBox="0 0 1180 210" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<polygon points="0,210 0,140 120,60 230,130 340,40 480,150 600,90 760,170 860,110 980,160 1090,80 1180,150 1180,210" fill="#0a1622"/>
+<polygon points="0,210 0,170 150,120 300,175 460,110 620,180 800,140 950,190 1180,150 1180,210" fill="#0d1c2c"/>
+</svg>
+<a class="menu-back" href="index.html">&larr; Torna al menu</a>
+<div class="header">
+  <div class="badge"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<circle cx="24" cy="24" r="19" fill="none" stroke="#f4d21c" stroke-width="3"/>
+<circle cx="24" cy="24" r="4" fill="#f4d21c"/>
+<g stroke="#f4d21c" stroke-width="2">
+<line x1="24" y1="24" x2="24" y2="6"/><line x1="24" y1="24" x2="24" y2="42"/>
+<line x1="24" y1="24" x2="6" y2="24"/><line x1="24" y1="24" x2="42" y2="24"/>
+<line x1="24" y1="24" x2="11" y2="11"/><line x1="24" y1="24" x2="37" y2="37"/>
+<line x1="24" y1="24" x2="11" y2="37"/><line x1="24" y1="24" x2="37" y2="11"/>
+</g>
+</svg></div>
+  <div class="header-text">
+    <p class="eyebrow">Fantatour 2026™ · Maglia Gialla</p>
+    <h1>Classifica Generale</h1>
+    <p class="sub">Classifica complessiva squadra per squadra, tappa dopo tappa</p>
+  </div>
+  <div class="sponsor"><span class="dot"></span>Fantatour 2026™</div>
+</div>
+
+<div id="classifica-container"></div>
+
+<div class="footer-note">Fantatour 2026™ &middot; aggiornato ad ogni tappa</div>
+</div>
+<script>
+const DATA = [{"pos": 1, "squadra": "A.s.d. Planate", "ds": "Samuele Almagioni", "stages": {"1": 0, "2": 30, "3": 108, "4": 118, "5": 128, "6": 193, "7": 228, "8": 263, "9": 273, "10": 354, "11": 359, "12": 364, "13": 371, "14": 495, "15": 591, "16": 627, "17": 640, "18": 821, "19": 956, "20": 1055, "21": 1060}, "extra": 95, "totale": 1155}, {"pos": 2, "squadra": "Gelateria Chocoloco - Vignola (MO)", "ds": "Guido Romeo", "stages": {"1": 0, "2": 26, "3": 101, "4": 117, "5": 121, "6": 186, "7": 203, "8": 228, "9": 242, "10": 338, "11": 349, "12": 354, "13": 361, "14": 472, "15": 562, "16": 598, "17": 612, "18": 737, "19": 902, "20": 1039, "21": 1044}, "extra": 95, "totale": 1139}, {"pos": 3, "squadra": "LaVisconteCobram", "ds": "Marco Moscatiello", "stages": {"1": 0, "2": 30, "3": 100, "4": 100, "5": 112, "6": 170, "7": 205, "8": 240, "9": 249, "10": 327, "11": 332, "12": 367, "13": 372, "14": 466, "15": 533, "16": 570, "17": 585, "18": 714, "19": 846, "20": 938, "21": 943}, "extra": 100, "totale": 1043}, {"pos": 4, "squadra": "CMFS - Confusion Mentale Fin de Siècle", "ds": "Davide Grazielli", "stages": {"1": 0, "2": 33, "3": 104, "4": 104, "5": 114, "6": 176, "7": 211, "8": 246, "9": 254, "10": 319, "11": 324, "12": 359, "13": 365, "14": 431, "15": 499, "16": 540, "17": 548, "18": 630, "19": 754, "20": 850, "21": 855}, "extra": 100, "totale": 955}, {"pos": 5, "squadra": "Pippottin Soudal", "ds": "Davide Cipollini", "stages": {"1": 0, "2": 34, "3": 94, "4": 120, "5": 121, "6": 201, "7": 226, "8": 231, "9": 296, "10": 364, "11": 399, "12": 407, "13": 437, "14": 495, "15": 639, "16": 688, "17": 693, "18": 757, "19": 839, "20": 857, "21": 862}, "extra": 80, "totale": 942}, {"pos": 6, "squadra": "Squadra Genew", "ds": "Jacopo Volonté", "stages": {"1": 0, "2": 25, "3": 82, "4": 102, "5": 136, "6": 226, "7": 270, "8": 308, "9": 318, "10": 385, "11": 396, "12": 445, "13": 450, "14": 521, "15": 615, "16": 645, "17": 656, "18": 727, "19": 838, "20": 863, "21": 875}, "extra": 60, "totale": 935}, {"pos": 7, "squadra": "Lodolandia Epo Cycling", "ds": "Jacopo Lodolo", "stages": {"1": 0, "2": 37, "3": 105, "4": 105, "5": 116, "6": 184, "7": 254, "8": 289, "9": 321, "10": 383, "11": 418, "12": 453, "13": 458, "14": 537, "15": 586, "16": 623, "17": 633, "18": 720, "19": 818, "20": 844, "21": 849}, "extra": 80, "totale": 929}, {"pos": 8, "squadra": "LaRosaGialla", "ds": "Fabio Passi", "stages": {"1": 0, "2": 32, "3": 101, "4": 109, "5": 119, "6": 204, "7": 244, "8": 279, "9": 293, "10": 352, "11": 357, "12": 392, "13": 397, "14": 446, "15": 518, "16": 610, "17": 618, "18": 702, "19": 784, "20": 823, "21": 828}, "extra": 90, "totale": 918}, {"pos": 9, "squadra": "Per chi tira la Polonia?!?", "ds": "Guido Pastore", "stages": {"1": 0, "2": 28, "3": 125, "4": 131, "5": 198, "6": 266, "7": 278, "8": 296, "9": 333, "10": 393, "11": 418, "12": 450, "13": 477, "14": 526, "15": 592, "16": 659, "17": 666, "18": 706, "19": 773, "20": 805, "21": 817}, "extra": 90, "totale": 907}, {"pos": 10, "squadra": "B-IGA", "ds": "Alessandro Bonissone", "stages": {"1": 0, "2": 25, "3": 93, "4": 93, "5": 103, "6": 208, "7": 245, "8": 280, "9": 294, "10": 357, "11": 362, "12": 397, "13": 402, "14": 471, "15": 534, "16": 571, "17": 584, "18": 660, "19": 790, "20": 816, "21": 821}, "extra": 80, "totale": 901}, {"pos": 11, "squadra": "Cavioni Cereali Sementi e Mangimi", "ds": "Ulisse Bastianelli", "stages": {"1": 0, "2": 37, "3": 105, "4": 105, "5": 115, "6": 183, "7": 218, "8": 253, "9": 291, "10": 353, "11": 358, "12": 393, "13": 398, "14": 477, "15": 526, "16": 565, "17": 575, "18": 662, "19": 765, "20": 791, "21": 796}, "extra": 80, "totale": 876}, {"pos": 12, "squadra": "Molla Buni!", "ds": "Davide Ambrosini", "stages": {"1": 0, "2": 40, "3": 103, "4": 110, "5": 115, "6": 176, "7": 181, "8": 186, "9": 263, "10": 325, "11": 330, "12": 335, "13": 345, "14": 421, "15": 470, "16": 507, "17": 517, "18": 629, "19": 731, "20": 759, "21": 764}, "extra": 80, "totale": 844}, {"pos": 13, "squadra": "Team Gallo", "ds": "Giorgio Verduci", "stages": {"1": 0, "2": 28, "3": 78, "4": 83, "5": 83, "6": 156, "7": 161, "8": 166, "9": 232, "10": 303, "11": 310, "12": 315, "13": 352, "14": 402, "15": 512, "16": 579, "17": 584, "18": 621, "19": 688, "20": 720, "21": 725}, "extra": 90, "totale": 815}, {"pos": 14, "squadra": "Nipples - Vini Fattoni - Bellazè", "ds": "Jacopo Nedbal", "stages": {"1": 0, "2": 23, "3": 82, "4": 97, "5": 131, "6": 205, "7": 252, "8": 290, "9": 295, "10": 357, "11": 362, "12": 371, "13": 381, "14": 451, "15": 539, "16": 575, "17": 580, "18": 621, "19": 693, "20": 713, "21": 725}, "extra": 75, "totale": 800}, {"pos": 15, "squadra": "LIDL TTRIMONI", "ds": "Giacomo Sacchetti", "stages": {"1": 0, "2": 28, "3": 78, "4": 112, "5": 117, "6": 181, "7": 221, "8": 246, "9": 282, "10": 335, "11": 385, "12": 400, "13": 429, "14": 473, "15": 560, "16": 597, "17": 602, "18": 631, "19": 701, "20": 714, "21": 719}, "extra": 80, "totale": 799}, {"pos": 16, "squadra": "Team BDSM", "ds": "Daniele Ruosi", "stages": {"1": 0, "2": 32, "3": 85, "4": 90, "5": 90, "6": 180, "7": 185, "8": 190, "9": 231, "10": 299, "11": 304, "12": 309, "13": 319, "14": 376, "15": 466, "16": 503, "17": 508, "18": 538, "19": 661, "20": 708, "21": 713}, "extra": 80, "totale": 793}, {"pos": 17, "squadra": "Scrocco Touring Club", "ds": "Matteo Collotti", "stages": {"1": 0, "2": 30, "3": 105, "4": 108, "5": 118, "6": 202, "7": 237, "8": 288, "9": 299, "10": 367, "11": 372, "12": 377, "13": 382, "14": 443, "15": 520, "16": 557, "17": 565, "18": 620, "19": 688, "20": 705, "21": 710}, "extra": 80, "totale": 790}, {"pos": 18, "squadra": "Monmatron", "ds": "Tommaso Gioli", "stages": {"1": 0, "2": 24, "3": 74, "4": 74, "5": 74, "6": 142, "7": 147, "8": 152, "9": 218, "10": 269, "11": 274, "12": 279, "13": 353, "14": 400, "15": 476, "16": 512, "17": 539, "18": 613, "19": 684, "20": 702, "21": 707}, "extra": 75, "totale": 782}, {"pos": 19, "squadra": "Gnaron1995", "ds": "Aaron Medico", "stages": {"1": 0, "2": 40, "3": 86, "4": 150, "5": 157, "6": 207, "7": 214, "8": 214, "9": 252, "10": 304, "11": 309, "12": 314, "13": 323, "14": 394, "15": 474, "16": 513, "17": 518, "18": 579, "19": 665, "20": 687, "21": 692}, "extra": 75, "totale": 767}, {"pos": 20, "squadra": "Arkea Zzodicane", "ds": "Michele Ambrosini", "stages": {"1": 0, "2": 52, "3": 106, "4": 112, "5": 112, "6": 191, "7": 196, "8": 201, "9": 248, "10": 298, "11": 303, "12": 311, "13": 322, "14": 366, "15": 424, "16": 465, "17": 470, "18": 527, "19": 643, "20": 678, "21": 683}, "extra": 75, "totale": 758}, {"pos": 21, "squadra": "Astio Mangiabaguette", "ds": "Adriano Astolfi", "stages": {"1": 0, "2": 31, "3": 81, "4": 92, "5": 93, "6": 157, "7": 187, "8": 192, "9": 255, "10": 306, "11": 341, "12": 349, "13": 381, "14": 425, "15": 489, "16": 519, "17": 529, "18": 581, "19": 633, "20": 647, "21": 688}, "extra": 60, "totale": 748}, {"pos": 22, "squadra": "Alla Bersagliera", "ds": "PierNunzio Pennisi", "stages": {"1": 0, "2": 37, "3": 87, "4": 87, "5": 117, "6": 186, "7": 191, "8": 206, "9": 242, "10": 293, "11": 318, "12": 343, "13": 376, "14": 423, "15": 499, "16": 529, "17": 546, "18": 601, "19": 653, "20": 667, "21": 678}, "extra": 60, "totale": 738}, {"pos": 23, "squadra": "Sborahansgroe", "ds": "Nicolò Mura", "stages": {"1": 0, "2": 28, "3": 94, "4": 102, "5": 106, "6": 172, "7": 192, "8": 217, "9": 257, "10": 310, "11": 320, "12": 335, "13": 364, "14": 408, "15": 472, "16": 512, "17": 517, "18": 545, "19": 623, "20": 641, "21": 646}, "extra": 75, "totale": 721}, {"pos": 24, "squadra": "GxG", "ds": "Giacomo Gambatesa", "stages": {"1": 0, "2": 2, "3": 40, "4": 72, "5": 79, "6": 132, "7": 144, "8": 144, "9": 162, "10": 232, "11": 237, "12": 242, "13": 247, "14": 321, "15": 402, "16": 432, "17": 443, "18": 514, "19": 620, "20": 645, "21": 650}, "extra": 60, "totale": 710}, {"pos": 25, "squadra": "Les experts", "ds": "Bruno Di Benedetto", "stages": {"1": 0, "2": 31, "3": 81, "4": 86, "5": 96, "6": 160, "7": 195, "8": 230, "9": 260, "10": 318, "11": 323, "12": 328, "13": 363, "14": 412, "15": 496, "16": 526, "17": 531, "18": 555, "19": 617, "20": 632, "21": 637}, "extra": 60, "totale": 697}, {"pos": 26, "squadra": "La gamba oltre la siepe", "ds": "Luca Jadi", "stages": {"1": 0, "2": 28, "3": 78, "4": 86, "5": 86, "6": 154, "7": 159, "8": 164, "9": 224, "10": 275, "11": 280, "12": 285, "13": 312, "14": 359, "15": 423, "16": 456, "17": 468, "18": 511, "19": 563, "20": 588, "21": 629}, "extra": 60, "totale": 689}, {"pos": 27, "squadra": "Casolari Piluch", "ds": "Emiliano Mariotti e Riccardo Spinelli", "stages": {"1": 0, "2": 24, "3": 76, "4": 76, "5": 76, "6": 140, "7": 147, "8": 152, "9": 212, "10": 263, "11": 268, "12": 273, "13": 300, "14": 347, "15": 414, "16": 444, "17": 456, "18": 483, "19": 537, "20": 560, "21": 613}, "extra": 60, "totale": 673}, {"pos": 28, "squadra": "Epo e solfiti", "ds": "Gabriele Lanza", "stages": {"1": 0, "2": 23, "3": 81, "4": 86, "5": 86, "6": 158, "7": 170, "8": 175, "9": 217, "10": 272, "11": 277, "12": 282, "13": 292, "14": 340, "15": 401, "16": 431, "17": 443, "18": 468, "19": 539, "20": 564, "21": 605}, "extra": 60, "totale": 665}, {"pos": 29, "squadra": "T-Mobbasta", "ds": "Ale Mayr", "stages": {"1": 0, "2": 19, "3": 77, "4": 97, "5": 107, "6": 151, "7": 181, "8": 211, "9": 216, "10": 243, "11": 243, "12": 273, "13": 273, "14": 312, "15": 347, "16": 347, "17": 352, "18": 445, "19": 498, "20": 570, "21": 572}, "extra": 20, "totale": 592}, {"pos": 30, "squadra": "Pedale Cusaghese", "ds": "Marco Colucci", "stages": {"1": 0, "2": 7, "3": 47, "4": 51, "5": 57, "6": 113, "7": 119, "8": 126, "9": 137, "10": 169, "11": 179, "12": 191, "13": 202, "14": 252, "15": 298, "16": 305, "17": 353, "18": 413, "19": 450, "20": 462, "21": 482}, "extra": 20, "totale": 502}, {"pos": 31, "squadra": "MetadoneUno", "ds": "Thomas Criscuolo", "stages": {"1": 0, "2": 17, "3": 49, "4": 53, "5": 59, "6": 104, "7": 110, "8": 117, "9": 123, "10": 153, "11": 153, "12": 153, "13": 162, "14": 193, "15": 226, "16": 237, "17": 239, "18": 253, "19": 291, "20": 294, "21": 294}, "extra": 20, "totale": 314}];
+const HAS_EXTRA = true;
+
+function esc(s){ return (s===null||s===undefined) ? '' : String(s); }
+
+function render(){
+  const N = 21;
+  let options = '';
+  for(let n=1;n<=N;n++){ options += `<option value="Tappa ${n}">Tappa ${n}</option>`; }
+  if(HAS_EXTRA) options += `<option value="Extra">Extra</option>`;
+  options += `<option value="Totale" selected>Totale</option>`;
+
+  const rows = DATA.map((r,i)=>{
+    const isLeader = r.pos===1;
+    let labelSpans = '';
+    for(let n=1;n<=N;n++){
+      labelSpans += `<div class="pts-item stage-item" data-label="Tappa ${n}"><span class="pts">${r.stages[n]}</span><span class="pts-label">Tappa ${n}</span></div>`;
+    }
+    if(HAS_EXTRA){
+      labelSpans += `<div class="pts-item stage-item" data-label="Extra"><span class="pts pts-extra">${r.extra}</span><span class="pts-label">Extra</span></div>`;
+    }
+    labelSpans += `<div class="pts-item stage-item" data-label="Totale"><span class="pts pts-totale">${r.totale}</span><span class="pts-label">Totale</span></div>`;
+    return `<div class="row${isLeader?' leader':(i%2?' alt':'')}">
+      <div class="pos">${r.pos}</div>
+      <div class="team-block"><span class="team">${esc(r.squadra)}</span><span class="ds">${esc(r.ds)}</span></div>
+      <div class="pts-block">${labelSpans}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('classifica-container').innerHTML = `
+    <select class="stage-select" id="stage-select">${options}</select>
+    <div class="board">${rows}</div>`;
+
+  const select = document.getElementById('stage-select');
+  function applyFilter(){
+    const val = select.value;
+    document.querySelectorAll('.stage-item').forEach(el=>{
+      const lbl = el.dataset.label;
+      el.style.display = (lbl === 'Totale' || lbl === val) ? '' : 'none';
+    });
+  }
+  select.addEventListener('change', applyFilter);
+  applyFilter();
+}
+render();
+</script>
+</body></html>
