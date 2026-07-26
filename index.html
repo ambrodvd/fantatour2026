@@ -279,6 +279,62 @@ body{
 .rider-row .rpts{ color:var(--yellow); font-weight:700; flex-shrink:0; }
 .rider-row.zero .rpts{ color:var(--ink-dim); font-weight:400; }
 
+.top-links-grid{
+  position:relative; z-index:2;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-bottom:24px;
+}
+@media(max-width:600px){
+  .top-links-grid{ grid-template-columns:1fr; }
+}
+.top-link-btn{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  text-decoration:none;
+  border-radius:14px;
+  padding:18px 22px;
+  border:1px solid var(--line);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.top-link-btn:hover{ transform:translateY(-3px); }
+.top-link-btn.gialla{
+  background:linear-gradient(90deg, var(--yellow) 0%, var(--yellow-deep) 100%);
+  box-shadow:0 6px 18px rgba(244,210,28,0.28);
+}
+.top-link-btn.verde{
+  background:linear-gradient(90deg, #2fbf6a 0%, #1f9950 100%);
+  box-shadow:0 6px 18px rgba(47,191,106,0.28);
+}
+.top-link-btn .tl-icon{
+  width:40px; height:40px; flex-shrink:0;
+  border-radius:50%;
+  background:rgba(0,0,0,0.15);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+}
+.top-link-btn .tl-text .tl-tag{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  font-size:11.5px;
+  font-weight:700;
+  opacity:0.75;
+}
+.top-link-btn.gialla .tl-text .tl-tag,
+.top-link-btn.gialla .tl-icon{ color:#161200; }
+.top-link-btn.verde .tl-text .tl-tag,
+.top-link-btn.verde .tl-icon{ color:#052914; }
+.top-link-btn .tl-text .tl-title{
+  font-family:"DejaVu Sans Condensed",sans-serif;
+  font-weight:700;
+  font-size:19px;
+}
+.top-link-btn.gialla .tl-text .tl-title{ color:#161200; }
+.top-link-btn.verde .tl-text .tl-title{ color:#052914; }
+
 .menu-grid{
   position:relative; z-index:2;
   display:grid;
@@ -371,6 +427,16 @@ body{
     <h1>Seleziona la Tappa</h1>
     <p class="sub">Scegli la tappa per vedere classifiche e risultati</p>
   </div>
+</div>
+<div class="top-links-grid">
+  <a class="top-link-btn gialla" href="tappa21.html#generale">
+    <span class="tl-icon">🌻</span>
+    <span class="tl-text"><span class="tl-tag">Maglia Gialla</span><br><span class="tl-title">Classifica Generale</span></span>
+  </a>
+  <a class="top-link-btn verde" href="tappa21.html#punti">
+    <span class="tl-icon">🐸</span>
+    <span class="tl-text"><span class="tl-tag">Maglia Verde</span><br><span class="tl-title">Classifica a Punti</span></span>
+  </a>
 </div>
 <div class="menu-grid"><a class="menu-card" href="extra.html">
   <div class="tag">Fantatour</div>
